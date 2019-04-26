@@ -31,6 +31,7 @@ import com.supermap.demo.test.mvp.view.MainView;
 import com.supermap.demo.test.router.RouterCons;
 import com.supermap.demo.test.supermap.utils.SMIMobileInitializer;
 import com.supermap.demo.test.supermap.utils.WorkspaceUtils;
+import com.supermap.demo.test.ui.activity.test.GeometryInfoActivity;
 import com.supermap.demo.test.ui.adapter.FullSearchAdapter;
 import com.supermap.demo.test.ui.fragment.MenuFragment;
 import com.supermap.demo.test.ui.fragment.tool.BusinessFragment;
@@ -443,6 +444,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
                 break;
 
             case R.id.ll_favorite://收藏
+                startActivity(new Intent(this, GeometryInfoActivity.class));
                 break;
             case R.id.rel_periphery://周边
                 new DefaultUriRequest(this, RouterCons.CREATE_PERIPHERY)

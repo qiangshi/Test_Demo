@@ -18,7 +18,9 @@ import android.widget.Toast;
 import android.widget.ZoomControls;
 
 import com.supermap.demo.test.R;
+import com.supermap.demo.test.constants.Constant;
 import com.supermap.demo.test.mvp.presenter.basePresenter.BasePresenter;
+import com.supermap.demo.test.supermap.utils.SMIMobileInitializer;
 import com.supermap.demo.test.ui.activity.BaseActivity;
 import com.supermap.demo.test.utils.MLog;
 import com.supermap.data.CursorType;
@@ -69,7 +71,11 @@ public class GeometryInfoActivity extends BaseActivity implements View.OnTouchLi
 
     @Override
     protected int getLayoutId() {
-        Environment.initialization(this);
+        SMIMobileInitializer.initializeEnv(sdcard + Constant.SD_SM_LICENSE_DIR,
+                sdcard + Constant.SD_SM_TEMP_DIR,
+                sdcard + Constant.SD_SM_WEBCACHE_DIR,
+                sdcard + Constant.SD_SM_FONTS_DIR,
+                this);
         return R.layout.activity_geometry_info;
     }
 
@@ -119,7 +125,7 @@ public class GeometryInfoActivity extends BaseActivity implements View.OnTouchLi
         m_woWorkspace = new Workspace();
 
         WorkspaceConnectionInfo m_info = new WorkspaceConnectionInfo();
-        m_info.setServer(sdcard + "/SampleData/GeometryInfo/World.smwu");
+        m_info.setServer(sdcard + Constant.SD_SM_DB_NINGBOGANG);
         m_info.setType(WorkspaceType.SMWU);
 
         return m_woWorkspace.open(m_info);

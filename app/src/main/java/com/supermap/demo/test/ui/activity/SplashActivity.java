@@ -1,6 +1,7 @@
 package com.supermap.demo.test.ui.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Window;
@@ -12,6 +13,7 @@ import com.supermap.demo.test.database.UserDB;
 import com.supermap.demo.test.manager.UserDBManager;
 import com.supermap.demo.test.mvp.presenter.basePresenter.BasePresenter;
 import com.supermap.demo.test.router.RouterCons;
+import com.supermap.demo.test.ui.activity.test.GeometryInfoActivity;
 import com.supermap.demo.test.utils.AssetsFileCopyUtils;
 import com.supermap.demo.test.utils.MD5Util;
 import com.supermap.demo.test.utils.SharePreferenceUtil;
@@ -149,14 +151,16 @@ public class SplashActivity extends BaseActivity {
      * 跳转到 MainActivity
      */
     private void toMAin() {
-        new DefaultUriRequest(this, RouterCons.CREATE_MAIN)
-                .start();
+        startActivity(new Intent(this, GeometryInfoActivity.class));
+//        new DefaultUriRequest(this, RouterCons.CREATE_MAIN)
+//                .start();
         finish();
     }
 
     private void toLogin() {
-        new DefaultUriRequest(this, RouterCons.CREATE_LOGIN)
-                .start();
+        startActivity(new Intent(this, GeometryInfoActivity.class));
+//        new DefaultUriRequest(this, RouterCons.CREATE_LOGIN)
+//                .start();
         finish();
     }
 

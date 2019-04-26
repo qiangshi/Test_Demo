@@ -16,6 +16,7 @@ public class Constant {
     public static final String SD_SM_WEBCACHE_DIR = SD_PROJ_DIR + "/SMData/WebCache";//超图web缓存路径
     public static final String SD_SM_FONTS_DIR = SD_PROJ_DIR + "/SMData/fonts";//超图字体文件路径
     public static final String SD_SM_DB_WS = SD_PROJ_DIR + "/SMData/GeometryInfo/SHPD-Business.smwu";//超图数据工作空间
+    public static final String SD_SM_DB_NINGBOGANG = SD_PROJ_DIR + "/SMData/GeometryInfo/ningbogang.smwu";//超图数据工作空间
     public static final String SD_SM_DB_BASE_MAP = SD_PROJ_DIR + "/SMData/GeometryInfo/baseMap/baseMap.sci";//基础底图sci路径
 
     public static final String SM_BUSINESS_MAP_NAME = "businessMap"; //超图数据工作空间中的业务地图名称

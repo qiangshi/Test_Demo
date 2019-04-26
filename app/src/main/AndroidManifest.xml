@@ -40,7 +40,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/TranslucentTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.SplashActivity"/>
+        <activity android:name=".ui.activity.test.ServiceActivity"/>
         <activity android:name=".ui.activity.user.ModifyPasswordActivity" />
         <activity android:name=".ui.activity.user.UserActivity" />
         <activity android:name=".ui.activity.DetailActivity" />
@@ -63,7 +63,7 @@
             android:name=".ui.activity.test.GeometryInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.test.ServiceActivity"
+            android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
