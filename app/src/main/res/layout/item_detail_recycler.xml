@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/padding_100"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/color_f5f5f5">
+
+
+    <TextView
+        android:id="@+id/tv_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_21"
+        android:text="06-12"
+        android:layout_centerVertical="true"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/text_font_15" />
+
+    <TextView
+        android:id="@+id/tv_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_28"
+        android:layout_marginTop="@dimen/padding_2"
+        android:text="2017"
+        android:textColor="@color/color_878787"
+        android:textSize="@dimen/text_font_12"
+        android:layout_below="@+id/tv_month"/>
+
+    <View
+        android:id="@+id/view_cir"
+        android:layout_width="@dimen/padding_8"
+        android:layout_height="@dimen/padding_8"
+        android:layout_marginStart="@dimen/padding_7"
+        android:layout_marginEnd="@dimen/padding_7"
+        android:background="@drawable/icon_detail_circular"
+        android:layout_toEndOf="@+id/tv_month"
+        android:layout_centerVertical="true" />
+
+
+    <View
+        android:id="@+id/view_up"
+        android:layout_width="@dimen/padding_1"
+        android:layout_height="@dimen/padding_47"
+        android:layout_marginStart="@dimen/padding_11"
+        android:background="@color/color_e4e4e4"
+        android:layout_toEndOf="@+id/tv_month" />
+
+
+    <View
+        android:id="@+id/view_down"
+        android:layout_width="@dimen/padding_1"
+        android:layout_height="@dimen/padding_47"
+        android:layout_marginStart="@dimen/padding_11"
+        android:background="@color/color_e4e4e4"
+        android:layout_below="@+id/view_cir"
+        android:layout_toEndOf="@+id/tv_month"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_83"
+        android:layout_marginStart="@dimen/padding_7"
+        android:layout_marginEnd="@dimen/padding_13"
+        android:layout_toEndOf="@+id/view_cir"
+        android:background="@drawable/bg_solid_ffffff_5"
+        android:layout_centerVertical="true">
+
+
+        <TextView
+            android:id="@+id/tv_license"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/text_font_15"
+            android:layout_marginStart="@dimen/padding_16"
+            android:layout_marginTop="@dimen/padding_12"
+            android:text="建设工程规划许可证"/>
+
+        <LinearLayout
+            android:id="@+id/ll_edit"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/padding_27"
+            android:layout_height="@dimen/padding_27"
+            android:gravity="right"
+            android:background="@drawable/icon_detail_edit_bg">
+
+            <ImageView
+                android:layout_width="@dimen/padding_13"
+                android:layout_height="@dimen/padding_14"
+                android:scaleType="fitXY"
+                android:layout_marginEnd="@dimen/padding_2"
+                android:layout_marginTop="@dimen/padding_2"
+                android:src="@drawable/icon_detail_edit"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_land"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_12"
+            android:text="@string/land_use"
+            android:layout_marginTop="@dimen/padding_5"
+            android:layout_marginStart="@dimen/padding_16"
+            android:layout_below="@+id/tv_license"
+            android:textColor="@color/color_888888"/>
+
+        <TextView
+            android:id="@+id/tv_land_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_12"
+            tools:text="商业用途"
+            android:layout_marginTop="@dimen/padding_5"
+            android:layout_marginStart="@dimen/padding_6"
+            android:layout_below="@+id/tv_license"
+            android:layout_toRightOf="@+id/tv_land"
+            android:textColor="@color/color_888888"/>
+
+
+        <TextView
+            android:id="@+id/tv_approvals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_12"
+            android:text="@string/approvals_code"
+            android:layout_marginTop="@dimen/padding_5"
+            android:layout_marginStart="@dimen/padding_16"
+            android:layout_below="@+id/tv_land"
+            android:textColor="@color/color_888888"/>
+
+        <TextView
+            android:id="@+id/tv_approvals_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_12"
+            tools:text="卢房地【4646789】"
+            android:layout_marginTop="@dimen/padding_5"
+            android:layout_marginStart="@dimen/padding_6"
+            android:layout_below="@+id/tv_land"
+            android:layout_toRightOf="@+id/tv_approvals"
+            android:textColor="@color/color_888888"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

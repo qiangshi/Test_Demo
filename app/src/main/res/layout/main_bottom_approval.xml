@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/translucent">
+
+   <RelativeLayout
+       android:id="@+id/rel_title"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="@dimen/padding_33"
+           android:background="@drawable/gard_view_top">
+
+           <TextView
+               android:id="@+id/tv_land_type"
+               android:layout_width="@dimen/padding_62"
+               android:layout_height="@dimen/padding_33"
+               android:layout_marginStart="@dimen/padding_15"
+               android:layout_marginTop="@dimen/padding_10"
+               android:background="@drawable/icon_history_bg"
+               android:gravity="center"
+               android:textColor="@color/color_256fe9"
+               android:textSize="@dimen/text_font_11"
+               android:text="审批" />
+
+           <TextView
+               android:id="@+id/tv_name"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="@dimen/padding_8"
+               android:layout_marginTop="@dimen/padding_14"
+               android:layout_marginEnd="@dimen/padding_65"
+               android:layout_toEndOf="@+id/tv_land_type"
+               android:ellipsize="end"
+               android:maxLines="2"
+               android:textColor="@color/color_333333"
+               android:textSize="@dimen/text_font_18"
+               android:text="北京安科" />
+
+           <View
+               android:id="@+id/view"
+               android:layout_width="match_parent"
+               android:layout_height="@dimen/padding_1"
+               android:layout_below="@+id/tv_name"
+               android:layout_marginTop="@dimen/padding_14"
+               android:background="@color/color_e4e4e4" />
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/view"
+               android:layout_marginStart="@dimen/padding_17"
+               android:layout_marginTop="@dimen/padding_16"
+               android:layout_marginEnd="@dimen/padding_17"
+               android:layout_marginBottom="@dimen/padding_16">
+
+               <LinearLayout
+                   android:id="@+id/ll_area"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:gravity="center_horizontal"
+                   android:orientation="vertical">
+
+                   <TextView
+                       android:id="@+id/tv_area"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textColor="@color/color_4f81ff"
+                       android:textSize="@dimen/text_font_14"
+                       android:textStyle="bold"
+                       android:text="14" />
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="@dimen/padding_6"
+                       android:text="     面积（m²）"
+                       android:textColor="@color/color_878787"
+                       android:textSize="@dimen/text_font_14" />
+
+               </LinearLayout>
+
+               <View
+                   android:layout_width="@dimen/padding_1"
+                   android:layout_height="@dimen/padding_33"
+                   android:layout_gravity="center_vertical"
+                   android:background="@color/color_e4e4e4" />
+
+               <LinearLayout
+                   android:id="@+id/ll_used"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:gravity="center_horizontal"
+                   android:orientation="vertical">
+
+                   <TextView
+                       android:id="@+id/tv_used"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textColor="@color/color_4f81ff"
+                       android:textSize="@dimen/text_font_14"
+                       android:textStyle="bold"
+                       android:text="建设用地" />
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="@dimen/padding_6"
+                       android:text="用途"
+                       android:textColor="@color/color_878787"
+                       android:textSize="@dimen/text_font_14" />
+
+               </LinearLayout>
+
+               <View
+                   android:layout_width="@dimen/padding_1"
+                   android:layout_height="@dimen/padding_33"
+                   android:layout_gravity="center_vertical"
+                   android:background="@color/color_e4e4e4" />
+
+               <LinearLayout
+                   android:id="@+id/ll_start_end"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:gravity="center_horizontal"
+                   android:orientation="vertical">
+
+                   <TextView
+                       android:id="@+id/tv_start_end"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textColor="@color/color_4f81ff"
+                       android:textSize="@dimen/text_font_14"
+                       android:textStyle="bold"
+                       android:text="2001~2050" />
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="@dimen/padding_6"
+                       android:text="起止时间"
+                       android:textColor="@color/color_878787"
+                       android:textSize="@dimen/text_font_14" />
+
+               </LinearLayout>
+
+           </LinearLayout>
+
+       </RelativeLayout>
+
+
+       <RelativeLayout
+           android:id="@+id/rel_approval"
+           android:layout_width="@dimen/padding_73"
+           android:layout_height="@dimen/padding_73"
+           android:layout_alignParentEnd="true"
+           android:layout_marginEnd="@dimen/padding_15"
+           android:background="@drawable/icon_circlure_blue">
+
+           <ImageView
+               android:id="@+id/img_approval"
+               android:layout_width="@dimen/padding_18"
+               android:layout_height="@dimen/padding_17"
+               android:layout_centerHorizontal="true"
+               android:layout_marginTop="@dimen/padding_15"
+               android:src="@drawable/icon_appro" />
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/img_approval"
+               android:layout_centerHorizontal="true"
+               android:layout_marginTop="@dimen/padding_5"
+               android:text="@string/approval"
+               android:textColor="@color/white"
+               android:textSize="@dimen/text_font_12" />
+
+       </RelativeLayout>
+
+   </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img_default"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_250"
+        android:scaleType="fitXY"
+        android:layout_below="@id/rel_title"
+        android:src="@drawable/icon_default_approval" />
+
+    <View
+        android:layout_below="@+id/img_default"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_60"
+        android:background="@color/white"
+        android:visibility="gone"
+        />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rel_title"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
+
+</RelativeLayout>

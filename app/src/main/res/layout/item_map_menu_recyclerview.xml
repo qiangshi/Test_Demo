@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/padding_7"
+    android:paddingEnd="@dimen/padding_7"
+    android:gravity="center"
+    android:paddingTop="@dimen/padding_5"
+    android:paddingBottom="@dimen/padding_5"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/ll_map"
+        android:layout_width="wrap_content"
+        android:background="@drawable/bg_stroke_106ffe_3"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_margin="@dimen/padding_1.5"
+            android:id="@+id/img_map_pic"
+            android:layout_width="@dimen/padding_65"
+            android:layout_height="@dimen/padding_40"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_low_plot_2"/>
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_map"
+        android:layout_marginTop="@dimen/padding_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_545454"
+        android:textSize="@dimen/text_font_12"
+        tools:text="影像低图" />
+
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/icon_search_bg"
+    tools:context=".ui.activity.search.SearchActivity">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/title_bar_layout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_land_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginStart="@dimen/padding_11"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginEnd="@dimen/padding_11"
+        android:background="@drawable/bg_solid_ffffff_5" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rv_land_type"
+        android:layout_marginStart="@dimen/padding_11"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginEnd="@dimen/padding_11"
+        android:layout_marginBottom="@dimen/padding_10"
+        android:background="@drawable/bg_solid_ffffff_5" />
+
+
+    <RelativeLayout
+        android:id="@+id/rel_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rv_land_type"
+        android:layout_marginStart="@dimen/padding_11"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginEnd="@dimen/padding_11"
+        android:layout_marginBottom="@dimen/padding_10"
+        android:visibility="gone"/>
+
+
+</RelativeLayout>

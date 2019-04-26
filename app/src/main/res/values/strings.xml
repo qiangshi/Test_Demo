@@ -1,0 +1,107 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">宁波港demo</string>
+
+    <integer name="loading_anim">100</integer>
+    <integer name="animation_default_duration">300</integer>
+
+    <!--splash   login-->
+    <string name="login_title">浦东新区一张图移动版</string>
+    <string name="please_open_read_write_permission">请您打开我们需要的存储权限</string>
+    <string name="please_in_user_name">请输入您的账号</string>
+    <string name="please_in_user_password">请输入您的密码</string>
+    <string name="code_or_password_error">账号或密码错误</string>
+    <string name="login">登录</string>
+    <string name="msg_password_code_error">密码错误，请重新输入</string>
+    <string name="again_pass_logout_app">再按一退出程序</string>
+    <string name="all_search_service">全库搜索，一站式服务</string>
+
+
+    <!--mainActivity-->
+    <string name="pic_cen">图层</string>
+    <string name="favorite">收藏</string>
+    <string name="about">关于</string>
+    <string name="logout">退出登录</string>
+    <string name="periphery">搜周边</string>
+    <string name="sign">标记</string>
+    <string name="special_data">专题数据</string>
+    <string name="theme_data">主题数据</string>
+    <string name="development_ing">开发中...</string>
+    <string name="please_input_key">请输入搜索关键字</string>
+    <string name="please_input_contain">请输入准确的搜索范围</string>
+    <string name="search_periphery">搜索周边</string>
+    <string name="data_no_more">暂无更多信息</string>
+    <string name="no_data">暂无数据</string>
+
+    <!--peripheryActivity-->
+    <string name="find_periphery">发现周边</string>
+    <string name="five_m">500米</string>
+    <string name="thousand">1000米</string>
+    <string name="two_thousand">2000米</string>
+
+    <!--searchActivity-->
+    <string name="measure_area">面积:</string>
+    <string name="used">用途:</string>
+    <string name="start_end_time">起止时间:</string>
+    <string name="clear_history_data">清空历史数据</string>
+
+    <!--detailActivity-->
+    <string name="pro_name">项目名称：</string>
+    <string name="approvals_code">批文号：</string>
+    <string name="land_use">土地用途:</string>
+    <string name="bus_detail">业务详情</string>
+    <string name="approval">业务</string>
+    <string name="fava">隐藏</string>
+    <string name="please_input_old_password">请输入旧密码</string>
+    <string name="please_input_new_password">请输入新密码</string>
+    <string name="please_confirm_new_password">请确认新密码</string>
+    <string name="old_password">旧密码：</string>
+    <string name="new_password">新密码：</string>
+    <string name="confirm_new_password">确定新密码：</string>
+    <string name="confirm_modify">确认修改</string>
+    <string name="password_hint">密码只能由字母和数据组成，不能有特殊符号</string>
+    <string name="modify_password">修改密码</string>
+    <string name="password_error">两次输入的新密码不一致，请重新输入</string>
+    <string name="old_password_error">旧密码错误，请重新输入</string>
+    <string name="modify_success">修改成功</string>
+
+    <string name="land_plan">土地规划</string>
+    <string name="land_reserve">土地储备</string>
+    <string name="land_approval">土地审批</string>
+    <string name="land_title">土地权籍</string>
+    <string name="land_picture">建设管理</string>
+    <string name="land_delete">减量化</string>
+    <string name="land_law">土地执法</string>
+    <string name="control">控规</string>
+    <string name="approval_">审批</string>
+
+    <!--业务信息-->
+    <string name="area_code">地块编号:</string>
+    <string name="utilization">利用情况:</string>
+    <string name="nature_plan">规划性质:</string>
+    <string name="area_land">地块面积:</string>
+    <string name="mi_2">平方米</string>
+    <string name="costs">合同费用:</string>
+    <string name="yuan">元</string>
+    <string name="contract_date">合同日期:</string>
+    <string name="area">面积:</string>
+    <string name="cpy_name">公司名称:</string>
+    <string name="public_time">发布时间:</string>
+    <string name="allocated">已划拨</string>
+    <string name="sold">已出让</string>
+    <string name="no">无</string>
+    <string name="mi">米</string>
+    <string name="contract_no">出让合同号:</string>
+    <string name="special">农转用</string>
+    <string name="reserve">储备</string>
+    <string name="supply">供地</string>
+    <string name="contract">合同</string>
+    <string name="dialing">拨划</string>
+    <string name="ratio">容积率:</string>
+    <string name="decision_number">划拨决定书号:</string>
+    <string name="height">限高:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

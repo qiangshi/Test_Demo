@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_land_type"
+        android:layout_width="@dimen/padding_62"
+        android:layout_height="@dimen/padding_33"
+        android:layout_marginStart="@dimen/padding_15"
+        android:layout_marginTop="@dimen/padding_8"
+        android:background="@drawable/icon_history_bg"
+        android:gravity="center"
+        android:textColor="@color/color_256fe9"
+        android:textSize="@dimen/text_font_11"
+        tools:text="审批" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_14"
+        android:layout_marginEnd="@dimen/padding_28"
+        android:layout_toEndOf="@+id/tv_land_type"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/text_font_16"
+        tools:text="北京安科" />
+
+
+    <TextView
+        android:id="@+id/tv_mix"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginTop="@dimen/padding_5"
+        android:layout_marginStart="@dimen/padding_20"
+        android:layout_marginEnd="@dimen/padding_28"
+        android:layout_marginBottom="@dimen/padding_16"
+        android:text="fa;ldflajdf;lja;lsdfj;lajsdf;lkja;sdljkf;laskjdf;ljasd;lfj;alsdkjf;lajsdf;ljsdflkjdsfj;lsdfjalkdjsff;l"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/text_font_12" />
+
+    <ImageView
+        android:layout_width="@dimen/padding_8"
+        android:layout_height="@dimen/padding_14"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/padding_15"
+        android:scaleType="centerCrop"
+        android:src="@drawable/icon_land_right" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_1"
+        android:layout_marginStart="@dimen/padding_20"
+        android:layout_marginEnd="@dimen/padding_15"
+        android:background="@color/color_dde1eb"
+        android:layout_below="@+id/tv_mix"/>
+
+</RelativeLayout>

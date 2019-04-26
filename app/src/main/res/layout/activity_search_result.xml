@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.search.SearchResultActivity">
+
+    <com.supermap.mapping.MapView
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_305"/>
+
+    <include layout="@layout/title_bar_layout"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_land"
+        android:background="@color/white"
+        android:layout_below="@+id/map_view"
+        android:paddingBottom="@dimen/padding_10"
+        android:layout_marginBottom="@dimen/padding_10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

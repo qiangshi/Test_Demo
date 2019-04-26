@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.test.ServiceActivity">
+
+    <!-- 地图显示 -->
+    <RelativeLayout
+        android:id="@+id/map_show"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.supermap.mapping.MapView
+            android:id="@+id/mapview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ZoomControls
+            android:id="@+id/zoomControls1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true" />
+
+        <Button
+            android:id="@+id/btn_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:text="设置" />
+    </RelativeLayout>
+
+    <!-- 专题图 -->
+    <RelativeLayout
+        android:id="@+id/tb_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:background="@drawable/toolbar_selector"
+        android:paddingLeft="6dp"
+        android:paddingTop="6dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="2dp">
+
+        <TextView
+            android:id="@+id/txt_serverName"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="服务名："
+            android:textColor="#FF000000" />
+
+        <EditText
+            android:id="@+id/edt_serverName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/txt_serverName"
+            android:hint="请输入服务名"
+            android:text="map-china400/rest" />
+
+        <TextView
+            android:id="@+id/txt_mapName"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_below="@+id/txt_serverName"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="地图名："
+            android:textColor="#FF000000" />
+
+        <EditText
+            android:id="@+id/edt_mapName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignTop="@+id/txt_mapName"
+            android:layout_toRightOf="@+id/txt_mapName"
+            android:hint="请输入地图名"
+            android:text="China" />
+
+        <TextView
+            android:id="@+id/txt_layerName"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_below="@+id/txt_mapName"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="图层名："
+            android:textColor="#FF000000" />
+
+        <EditText
+            android:id="@+id/edt_layerName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignTop="@+id/txt_layerName"
+            android:layout_toRightOf="@+id/txt_layerName"
+            android:hint="请输入图层名"
+            android:text="China_Capital_pt@China" />
+
+        <TextView
+            android:id="@+id/txt_sql"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_below="@+id/txt_layerName"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="SQL："
+            android:textColor="#FF000000" />
+
+        <Button
+            android:id="@+id/btn_query"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@+id/edt_layerName"
+            android:layout_alignParentRight="true"
+            android:text="查询" />
+
+        <EditText
+            android:id="@+id/edt_sql"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignLeft="@+id/edt_layerName"
+            android:layout_alignTop="@+id/txt_sql"
+            android:layout_toLeftOf="@+id/btn_query"
+            android:hint="请输入查询语句"
+            android:text="SMID>0" />
+    </RelativeLayout>
+
+</RelativeLayout>

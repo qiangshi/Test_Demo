@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/icon_login_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.supermap.demo.test.ui.activity.LoginActivity">
+
+    <ImageView
+        android:id="@+id/img_super"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_135"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/icon_login_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_super"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_18"
+        android:text="@string/login_title"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_font_24"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_super" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_user_code"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_53"
+        android:layout_marginStart="@dimen/padding_33"
+        android:layout_marginTop="@dimen/padding_30"
+        android:layout_marginEnd="@dimen/padding_33"
+        android:background="@drawable/bg_user_code"
+        app:layout_constraintTop_toBottomOf="@+id/tv_super">
+
+
+        <ImageView
+            android:id="@+id/img_user_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_20"
+            android:src="@drawable/icon_login_user_code"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="@dimen/padding_180"
+            android:layout_height="match_parent"
+            android:hint="@string/please_in_user_name"
+            android:singleLine="true"
+            android:paddingStart="@dimen/padding_10"
+            android:layout_marginStart="@dimen/padding_17"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textColorHint="@color/color_b4b4b6"
+            android:textSize="@dimen/text_font_17"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+
+
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_close"
+            android:layout_marginEnd="@dimen/padding_20"
+            android:visibility="invisible"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_user_password"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_53"
+        android:layout_marginTop="@dimen/padding_9"
+        android:layout_marginStart="@dimen/padding_33"
+        android:layout_marginEnd="@dimen/padding_33"
+        android:background="@drawable/bg_user_code"
+        app:layout_constraintTop_toBottomOf="@+id/cl_user_code">
+
+
+        <ImageView
+            android:id="@+id/img_user_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_20"
+            android:src="@drawable/icon_login_password"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="@dimen/padding_180"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="@string/please_in_user_password"
+            android:singleLine="true"
+            android:paddingStart="@dimen/padding_10"
+            android:layout_marginStart="@dimen/padding_17"
+            android:inputType="textPassword"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textColorHint="@color/color_b4b4b6"
+            android:textSize="@dimen/text_font_17"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+
+
+        <ImageView
+            android:id="@+id/img_close_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_close"
+            android:layout_marginEnd="@dimen/padding_20"
+            android:visibility="invisible"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/padding_33"
+        android:background="@drawable/icon_login"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_font_24"
+        app:layout_constraintTop_toBottomOf="@+id/cl_user_password"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

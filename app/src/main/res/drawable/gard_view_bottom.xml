@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 第一层阴影 -->
+    <item>
+        <shape>
+            <solid android:color="@color/item_segmenting_line" />
+            <corners android:radius="@dimen/padding_5" />
+        </shape>
+    </item>
+    <!--第二层前景 底偏移1dp -->
+    <item android:bottom="@dimen/padding_1" android:top="@dimen/padding_1"
+         android:left="@dimen/padding_1" android:right="@dimen/padding_1">
+        <shape>
+            <solid android:color="@color/white" />
+            <corners android:radius="@dimen/padding_5" />
+        </shape>
+    </item>
+</layer-list>
