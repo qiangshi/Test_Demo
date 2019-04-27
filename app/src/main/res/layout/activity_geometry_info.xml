@@ -17,18 +17,68 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
 
-        <ZoomControls
-            android:id="@+id/zoomControls1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_zoom"
+        android:layout_width="@dimen/padding_42"
+        android:layout_height="@dimen/padding_105"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/padding_11"
+        android:layout_marginBottom="@dimen/padding_39"
+        android:background="@drawable/gard_view_bottom"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/ll_in"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/padding_4"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_click"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/padding_20"
+                android:layout_height="@dimen/padding_20"
+                android:layout_weight="1"
+                android:src="@drawable/icon_big" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/padding_34"
+            android:layout_height="@dimen/padding_1"
+            android:background="@color/item_segmenting_line" />
+
+        <LinearLayout
+            android:id="@+id/ll_out"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/padding_4"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_click"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/padding_20"
+                android:layout_height="@dimen/padding_20"
+                android:src="@drawable/icon_small" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
     <RelativeLayout
         android:id="@+id/layout_btns"
-        android:layout_marginBottom="@dimen/padding_80"
+        android:layout_marginBottom="@dimen/padding_20"
+        android:layout_above="@+id/ll_zoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         >

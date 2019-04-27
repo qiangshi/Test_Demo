@@ -2,7 +2,6 @@ package com.supermap.demo.test.ui.activity.test;
 
 
 import android.app.ProgressDialog;
-import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -13,16 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import android.widget.ZoomControls;
-
-import com.supermap.data.CoordSysTransMethod;
-import com.supermap.data.CoordSysTransParameter;
-import com.supermap.data.CoordSysTranslator;
 import com.supermap.data.Point;
 import com.supermap.data.Point2D;
-import com.supermap.data.Point2Ds;
-import com.supermap.data.PrjCoordSys;
-import com.supermap.data.PrjCoordSysType;
 import com.supermap.data.Workspace;
 import com.supermap.data.WorkspaceConnectionInfo;
 import com.supermap.data.WorkspaceType;
@@ -31,7 +22,6 @@ import com.supermap.demo.test.constants.Constant;
 import com.supermap.demo.test.mvp.presenter.basePresenter.BasePresenter;
 import com.supermap.demo.test.supermap.utils.SMIMobileInitializer;
 import com.supermap.demo.test.ui.activity.BaseActivity;
-import com.supermap.demo.test.ui.activity.MainActivity;
 import com.supermap.demo.test.utils.MLog;
 import com.supermap.mapping.CallOut;
 import com.supermap.mapping.CalloutAlignment;
@@ -44,15 +34,12 @@ import com.supermap.plugin.SpeakPlugin;
 import com.supermap.plugin.Speaker;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class GeometryInfoActivity extends BaseActivity implements View.OnTouchListener {
 
     @BindView(R.id.mapview)
     MapView mMapView;
-    @BindView(R.id.zoomControls1)
-    ZoomControls m_Zoom;
     @BindView(R.id.pan)
     Button btnPan;
     @BindView(R.id.guide)
@@ -190,23 +177,6 @@ public class GeometryInfoActivity extends BaseActivity implements View.OnTouchLi
     private void initView() {
         mMapControl = mMapView.getMapControl();
         mNavi = mMapControl.getNavigation();
-        m_Zoom.setOnZoomOutClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                mMapControl.getMap().zoom(0.5);
-                mMapControl.getMap().refresh();
-            }
-        });
-        m_Zoom.setOnZoomInClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                mMapControl.getMap().zoom(2);
-                mMapControl.getMap().refresh();
-            }
-        });
-
     }
 
     public boolean onTouch(View v, MotionEvent event) {
@@ -217,9 +187,17 @@ public class GeometryInfoActivity extends BaseActivity implements View.OnTouchLi
     }
 
 
-    @OnClick({R.id.pan, R.id.guide, R.id.analyst, R.id.setting})
+    @OnClick({R.id.pan, R.id.guide, R.id.analyst, R.id.setting,R.id.ll_in, R.id.ll_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.ll_in:
+                mMapControl.getMap().zoom(2);
+                mMapControl.getMap().refresh();
+                break;
+            case R.id.ll_out:
+                mMapControl.getMap().zoom(0.5);
+                mMapControl.getMap().refresh();
+                break;
             case R.id.pan:
                 mNavi.enablePanOnGuide(false);
                 break;
@@ -307,6 +285,7 @@ public class GeometryInfoActivity extends BaseActivity implements View.OnTouchLi
         }
     }
 
+
     // 手势监听器
     class MapGestureListener extends GestureDetector.SimpleOnGestureListener {
 
@@ -332,8 +311,8 @@ public class GeometryInfoActivity extends BaseActivity implements View.OnTouchLi
 //                CoordSysTranslator.convert(points, mMapControl.getMap().getPrjCoordSys(), desPrjCoorSys, new CoordSysTransParameter(), CoordSysTransMethod.MTH_GEOCENTRIC_TRANSLATION);
 //                pt = points.getItem(0);
 //            }
-            MLog.e("====zhq====>00<"+x+"===="+y);
-            MLog.e("====zhq====>11<"+pt.getX()+"===="+pt.getY());
+            MLog.e("====zhq====>00<" + x + "====" + y);
+            MLog.e("====zhq====>11<" + pt.getX() + "====" + pt.getY());
             ImageView image = new ImageView(GeometryInfoActivity.this);
             //添加第一个点
             if (!bEndPointEnable) {
