@@ -1,72 +1,86 @@
 package com.supermap.demo.test.ui.activity.test;
 
 
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.GestureDetector;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.PopupWindow;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.ZoomControls;
 
+import com.supermap.data.CoordSysTransMethod;
+import com.supermap.data.CoordSysTransParameter;
+import com.supermap.data.CoordSysTranslator;
+import com.supermap.data.Point;
+import com.supermap.data.Point2D;
+import com.supermap.data.Point2Ds;
+import com.supermap.data.PrjCoordSys;
+import com.supermap.data.PrjCoordSysType;
+import com.supermap.data.Workspace;
+import com.supermap.data.WorkspaceConnectionInfo;
+import com.supermap.data.WorkspaceType;
 import com.supermap.demo.test.R;
 import com.supermap.demo.test.constants.Constant;
 import com.supermap.demo.test.mvp.presenter.basePresenter.BasePresenter;
 import com.supermap.demo.test.supermap.utils.SMIMobileInitializer;
 import com.supermap.demo.test.ui.activity.BaseActivity;
+import com.supermap.demo.test.ui.activity.MainActivity;
 import com.supermap.demo.test.utils.MLog;
-import com.supermap.data.CursorType;
-import com.supermap.data.DatasetVector;
-import com.supermap.data.Environment;
-import com.supermap.data.Geometry;
-import com.supermap.data.Point2D;
-import com.supermap.data.QueryParameter;
-import com.supermap.data.Recordset;
-import com.supermap.data.Workspace;
-import com.supermap.data.WorkspaceConnectionInfo;
-import com.supermap.data.WorkspaceType;
-import com.supermap.mapping.Action;
 import com.supermap.mapping.CallOut;
 import com.supermap.mapping.CalloutAlignment;
-import com.supermap.mapping.Layer;
 import com.supermap.mapping.MapControl;
 import com.supermap.mapping.MapView;
+import com.supermap.navi.NaviInfo;
+import com.supermap.navi.NaviListener;
+import com.supermap.navi.Navigation;
+import com.supermap.plugin.SpeakPlugin;
+import com.supermap.plugin.Speaker;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class GeometryInfoActivity extends BaseActivity implements View.OnTouchListener {
 
-    private MapView m_mapView;
-    private MapControl m_mapControl; // 地图显示控件
+    @BindView(R.id.mapview)
+    MapView mMapView;
+    @BindView(R.id.zoomControls1)
+    ZoomControls m_Zoom;
+    @BindView(R.id.pan)
+    Button btnPan;
+    @BindView(R.id.guide)
+    Button btnGuide;
+    @BindView(R.id.analyst)
+    Button btnRoute;
+    @BindView(R.id.setting)
+    Button btnSetting;
+    @BindView(R.id.layout_btns)
+    RelativeLayout layout;
+
+
+    private MapControl mMapControl; // 地图显示控件
     private Workspace m_woWorkspace; // 工作空间
+    private Navigation mNavi = null;
 
-    private ZoomControls m_Zoom;
-    private ImageButton m_btnSelect;
 
-    private TextView m_txtCountry;
-    private TextView m_txtCapital;
-    private TextView m_txtPop;
-    private TextView m_txtContinent;
+    //操作过程中的状态改变
+    private boolean bGuideEnable = false;
+    private boolean bEndPointEnable = false;
+    private boolean bAnalystEnable = false;
+    private boolean bLongPressEnable = false;
+    //当进行路径分析后则不能修改起点终点
+    private boolean bSettingEnable = true;
 
-    private View m_DetailLayout;
-    private PopupWindow pwDetailInfo;
-
-    private String mStrCountry;
-    private String mStrCapital;
-    private String mStrPop;
-    private String mStrContinent;
-
-    private Button m_btnQuery;
-    private Spinner m_spnSelectContinent;
-    private ArrayAdapter<String> adtSelectContinent;
-    private static final String[] strContinentName = {"亚洲","欧洲","非洲","南美洲","北美洲","南极洲","大洋洲"};
-    private final String sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath().toString();
+    //是否重置起始点
+    private boolean bResetPoint = false;
+    private final String sdcard = Environment.getExternalStorageDirectory().getAbsolutePath().toString();
 
 
     @Override
@@ -86,44 +100,85 @@ public class GeometryInfoActivity extends BaseActivity implements View.OnTouchLi
 
     @Override
     protected void initDataAndEvent() {
-        openMap();
         initView();
+        openMap();
     }
 
     // 打开地图
-    private boolean openMap(){
+    private boolean openMap() {
 
         // 获取当前设备的显示屏幕的相关参数
         final Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics dm = new DisplayMetrics();
         display.getMetrics(dm);
 
-        if(openWorkspace()){
+        if (openWorkspace()) {
             // 将地图显示空间和 工作空间关联
-            m_mapView = (MapView)findViewById(R.id.mapview);
-            m_mapControl = m_mapView.getMapControl();
-            // 手势监听器
-            m_mapControl.setGestureDetector(new GestureDetector(this,new MapGestureListener()));
+            mMapControl.getMap().setWorkspace(m_woWorkspace);
+            mMapControl.getMap().setMapDPI(dm.densityDpi);
+            mMapControl.getMap().setFullScreenDrawModel(true);
+            mMapControl.setOnTouchListener(this);
 
-            m_mapControl.getMap().setWorkspace(m_woWorkspace);
-            m_mapControl.getMap().setMapDPI(dm.densityDpi);
-            m_mapControl.setOnTouchListener(this);
+            //设置手势委托
+            mMapControl.setGestureDetector(new GestureDetector(this, new MapGestureListener()));
+            //设置导航数据
+            mNavi.connectNaviData(sdcard + Constant.SD_SM_DB_GUIDE);
+
+            SpeakPlugin.getInstance().setSpeaker(Speaker.CONGLE);
+            mNavi.addNaviInfoListener(new NaviListener() {
+
+                @Override
+                public void onStopNavi() {
+                    // TODO Auto-generated method stub
+                    layout.setVisibility(View.VISIBLE);     // 导航停止后，显示按钮界面
+                    btnGuide.setText("开始引导");
+                }
+
+                @Override
+                public void onStartNavi() {
+                    // TODO Auto-generated method stub
+                    layout.setVisibility(View.GONE);        // 导航开始前，先隐藏按钮界面
+                }
+
+                @Override
+                public void onNaviInfoUpdate(NaviInfo arg0) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void onAarrivedDestination() {
+                    // TODO Auto-generated method stub
+                    layout.setVisibility(View.VISIBLE);     // 到达目的地后，显示按钮界面
+                    btnGuide.setText("开始引导");
+                }
+
+                @Override
+                public void onAdjustFailure() {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void onPlayNaviMessage(String arg0) {
+                    // TODO Auto-generated method stub
+                }
+            });
 
             // 打开工作空间中地图的第2幅地图
             String mapName = m_woWorkspace.getMaps().get(0);
-            boolean isOpenMap = m_mapControl.getMap().open(mapName);
-            if(isOpenMap){
+            boolean isOpenMap = mMapControl.getMap().open(mapName);
+            if (isOpenMap) {
                 // 刷新地图，涉及地图的任何操作都需要调用该接口进行刷新
-                m_mapControl.getMap().refresh();
+                mMapControl.getMap().refresh();
             }
             return true;
         }
         return false;
     }
 
-    private boolean openWorkspace(){
+    private boolean openWorkspace() {
         m_woWorkspace = new Workspace();
-
         WorkspaceConnectionInfo m_info = new WorkspaceConnectionInfo();
         m_info.setServer(sdcard + Constant.SD_SM_DB_NINGBOGANG);
         m_info.setType(WorkspaceType.SMWU);
@@ -132,298 +187,175 @@ public class GeometryInfoActivity extends BaseActivity implements View.OnTouchLi
     }
 
     // 初始化控件，绑定监听器
-    private void initView(){
-
-        m_Zoom = (ZoomControls)findViewById(R.id.zoomControls1);
+    private void initView() {
+        mMapControl = mMapView.getMapControl();
+        mNavi = mMapControl.getNavigation();
         m_Zoom.setOnZoomOutClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                m_mapControl.getMap().zoom(0.5);
-                m_mapControl.getMap().refresh();
+                mMapControl.getMap().zoom(0.5);
+                mMapControl.getMap().refresh();
             }
         });
         m_Zoom.setOnZoomInClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                m_mapControl.getMap().zoom(2);
-                m_mapControl.getMap().refresh();
+                mMapControl.getMap().zoom(2);
+                mMapControl.getMap().refresh();
             }
         });
 
-        m_btnSelect = (ImageButton)findViewById(R.id.btn_selectGeo);
-        m_btnSelect.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                m_mapControl.setAction(Action.SELECT);
-            }
-        });
-
-        m_spnSelectContinent = (Spinner)findViewById(R.id.spn_select_continent);
-        adtSelectContinent = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, strContinentName);
-        adtSelectContinent.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        m_spnSelectContinent.setAdapter(adtSelectContinent);
-
-        m_btnQuery = (Button)findViewById(R.id.btn_search);
-        m_btnQuery.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                Query(); // 查询
-            }
-        });
-
-        LayoutInflater lfCallOut = getLayoutInflater();
-        m_DetailLayout = lfCallOut.inflate(R.layout.detailinfo, null);
-
-        pwDetailInfo = new PopupWindow(m_DetailLayout,380, WindowManager.LayoutParams.WRAP_CONTENT);
-
-        m_txtCountry = (TextView)m_DetailLayout.findViewById(R.id.txt_country);
-        m_txtCapital = (TextView)m_DetailLayout.findViewById(R.id.txt_capital);
-        m_txtPop = (TextView)m_DetailLayout.findViewById(R.id.txt_pop);
-        m_txtContinent = (TextView)m_DetailLayout.findViewById(R.id.txt_Continent);
     }
 
     public boolean onTouch(View v, MotionEvent event) {
-        m_mapControl.onMultiTouch(event);
-        return true;
-    }
-
-    // 属性查询
-    private void Query(){
-        String strContinent = m_spnSelectContinent.getSelectedItem().toString();
-        String strFilter = "CONTINENT = '" + strContinent + "'";
-
-        // 获得第10个图层
-        Layer layer = m_mapControl.getMap().getLayers().get(9);
-        DatasetVector datasetvector = (DatasetVector)layer.getDataset();
-
-        // 设置查询参数
-        QueryParameter parameter = new QueryParameter();
-        parameter.setAttributeFilter(strFilter);
-        parameter.setCursorType(CursorType.STATIC);
-
-        // 查询，返回查询结果记录集
-        Recordset recordset = datasetvector.query(parameter);
-
-        if (recordset.getRecordCount()<1) {
-            Toast.makeText(GeometryInfoActivity.this, "未搜索到对象", Toast.LENGTH_SHORT).show();
-            m_mapControl.getMap().refresh();
-            return;
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            mNavi.enablePanOnGuide(true);
         }
-
-        Point2D ptInner;
-        recordset.moveFirst();
-        Geometry geometry = recordset.getGeometry();
-
-        m_mapView.removeAllCallOut(); // 移除所有Callout
-
-        while (!recordset.isEOF()) {
-            geometry = recordset.getGeometry();
-            ptInner = geometry.getInnerPoint();
-
-            LayoutInflater lfCallOut = getLayoutInflater();
-            View calloutLayout = lfCallOut.inflate(R.layout.callout2, null);
-
-            Button btnSelected = (Button)calloutLayout.findViewById(R.id.btnSelected);
-            btnSelected.setText(geometry.getID() + "");
-            btnSelected.setTag(geometry.getID());
-            btnSelected.setOnClickListener(new detailClickListener());
-
-            CallOut callout = new CallOut(this);
-            callout.setContentView(calloutLayout);				// 设置显示内容
-            callout.setCustomize(true);							// 设置自定义背景图片
-            callout.setLocation(ptInner.getX(), ptInner.getY());// 设置显示位置
-            MLog.e("====zhq====>xxxx<"+ptInner.getX()+"====>YYYY<"+ptInner.getY());
-            m_mapView.addCallout(callout);
-
-            recordset.moveNext();
-        }
-
-        m_mapView.showCallOut();								// 显示标注
-        m_mapControl.getMap().setCenter(geometry.getInnerPoint());
-        m_mapControl.getMap().refresh();
-
-        // 释放资源
-        recordset.dispose();
-        geometry.dispose();
+        return mMapControl.onMultiTouch(event);
     }
 
-    // ID查询
-    private void QuerybyID(String id){
-        String strFilter = "SMID = '" + id + "'";
 
-        // 获得第10个图层
-        Layer layer = m_mapControl.getMap().getLayers().get(9);
-        DatasetVector datasetvector = (DatasetVector)layer.getDataset();
-
-        // 设置查询参数
-        QueryParameter parameter = new QueryParameter();
-        parameter.setAttributeFilter(strFilter);
-        parameter.setCursorType(CursorType.STATIC);
-
-        // 查询，返回查询结果记录集
-        Recordset recordset = datasetvector.query(parameter);
-
-        if (recordset.getRecordCount()<1) {
-            return;
-        }
-
-        recordset.moveFirst();
-
-        mStrCountry = recordset.getFieldValue("COUNTRY").toString();
-        mStrCapital = recordset.getFieldValue("CAPITAL").toString();
-        mStrContinent = recordset.getFieldValue("CONTINENT").toString();
-        mStrPop = recordset.getFieldValue("POP_1994").toString();
-
-        // 释放资源
-        recordset.dispose();
-    }
-
-    private ImageButton btn_Close;
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
-
-    class detailClickListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            // TODO Auto-generated method stub
-            if (btn_Close != null)
-                btn_Close.performClick();
-
-            String strID = v.getTag().toString();
-            System.out.println(strID);
-            QuerybyID(strID);
-
-
-            m_txtCountry.setText(mStrCountry);
-            m_txtCapital.setText(mStrCapital);
-            m_txtPop.setText(mStrPop);
-            m_txtContinent.setText(mStrContinent);
-
-//			pwDetailInfo.showAtLocation(m_mapControl, Gravity.NO_GRAVITY, 8, 86);
-            pwDetailInfo.showAsDropDown(v, 60, -60);
-            btn_Close = (ImageButton)m_DetailLayout.findViewById(R.id.btn_close);
-
-            btn_Close.setOnClickListener(new View.OnClickListener() {
-
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    pwDetailInfo.dismiss();
+    @OnClick({R.id.pan, R.id.guide, R.id.analyst, R.id.setting})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.pan:
+                mNavi.enablePanOnGuide(false);
+                break;
+            case R.id.guide:
+                if (!bGuideEnable) {
+                    SpeakPlugin.getInstance().playSound("请先进行路径分析!");
+                    Toast.makeText(this, "请先进行路径分析!", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-            });
+                //如果是已经导航，再次点击则停止导航
+                if (mNavi.isGuiding()) {
+                    mNavi.cleanPath();
+                    mNavi.stopGuide();
+                    bSettingEnable = true;
+                    bGuideEnable = false;
+                    bEndPointEnable = false;
+                    mMapView.removeAllCallOut();
+                    btnGuide.setText("开始引导");
+                    return;
+                }
+                layout.setVisibility(View.GONE);        // 导航开始前，先隐藏按钮界面
+                //1代表模拟导航
+                mNavi.startGuide(1);
+                mNavi.enablePanOnGuide(false);
+                btnGuide.setText("停止引导");
+//                bGuideEnable = false;
+                break;
+            case R.id.analyst:
+                if (!bAnalystEnable) {
+                    Toast.makeText(this, "请先设置起点和终点!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //如果分析过了则再次点击是清除分析结果
+                if (bGuideEnable) {
+                    bGuideEnable = false;
+                    mNavi.cleanPath();
+                    bSettingEnable = true;
+                    return;
+                }
+                final ProgressDialog dialog = new ProgressDialog(this);
+                dialog.setCancelable(false);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.setMessage("路径分析中...");
+                dialog.show();
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // TODO Auto-generated method stub
+                        //0代表最快的模式
+                        mNavi.routeAnalyst(0);
+                        bGuideEnable = true;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // TODO Auto-generated method stub
+                                dialog.dismiss();
+                                btnRoute.setText("清除路径");
+                                bSettingEnable = false;
+                                mMapControl.getMap().refresh();
+                            }
+                        });
+                    }
+                }).start();
+                break;
+            case R.id.setting:
+                if (!bSettingEnable) {
+                    Toast.makeText(this, "不能修改起点和终点!", Toast.LENGTH_SHORT).show();
+                    bLongPressEnable = true;
+                    return;
+                }
+                if (bEndPointEnable) {
+                    Toast.makeText(this, "长按设置终点!", Toast.LENGTH_SHORT).show();
+                    bLongPressEnable = true;
+                    return;
+                }
+                if (bResetPoint) {
+                    mMapView.removeAllCallOut();//清空起始点
+                    bAnalystEnable = false;
+                    bResetPoint = false;
+                }
+                Toast.makeText(this, "长按设置起点!", Toast.LENGTH_SHORT).show();
+                bLongPressEnable = true;
+                break;
         }
     }
 
     // 手势监听器
     class MapGestureListener extends GestureDetector.SimpleOnGestureListener {
 
-        public MapGestureListener() {
-            super();
-            MLog.e("====zhq====>0000000<");
-        }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) {
-            MLog.e("====zhq====>111111111<");
-            return super.onSingleTapUp(e);
-        }
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            MLog.e("====zhq====>222222222<");
-            return super.onScroll(e1, e2, distanceX, distanceY);
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            MLog.e("====zhq====>333333333<");
-            return super.onFling(e1, e2, velocityX, velocityY);
-        }
-
-        @Override
-        public void onShowPress(MotionEvent e) {
-            MLog.e("====zhq====>444444444<");
-            super.onShowPress(e);
-        }
-
-        @Override
-        public boolean onDown(MotionEvent e) {
-            MLog.e("====zhq====>555555555<");
-            return super.onDown(e);
-        }
-
-        @Override
-        public boolean onDoubleTap(MotionEvent e) {
-            MLog.e("====zhq====>666666666<");
-            return super.onDoubleTap(e);
-        }
-
-        @Override
-        public boolean onDoubleTapEvent(MotionEvent e) {
-            MLog.e("====zhq====>777777777<");
-            return super.onDoubleTapEvent(e);
-        }
-
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent e) {
-            MLog.e("====zhq====>888888888<");
-            return super.onSingleTapConfirmed(e);
-        }
-
-        @Override
-        public boolean onContextClick(MotionEvent e) {
-            MLog.e("====zhq====>9999999<");
-            return super.onContextClick(e);
-        }
-
         @Override
         public void onLongPress(MotionEvent e) {
             MLog.e("====zhq====>1010101010<");
-            // TODO Auto-generated method stub
-            Recordset rt = null;
-            // 获得第10个图层
-            Layer ly = m_mapControl.getMap().getLayers().get(9);
-            rt  = ly.getSelection().toRecordset();
-
-            if (rt != null) {
-                if (rt.getRecordCount()<1) {
-                    return;
-                }
-                mStrCountry = rt.getFieldValue("COUNTRY").toString();
-                mStrCapital = rt.getFieldValue("CAPITAL").toString();
-                mStrContinent = rt.getFieldValue("CONTINENT").toString();
-                mStrPop = rt.getFieldValue("POP_1994").toString();
-
-                Geometry geometry = rt.getGeometry();
-                Point2D ptInner = geometry.getInnerPoint();
-
-                LayoutInflater lfCallOut = getLayoutInflater();
-                View calloutLayout = lfCallOut.inflate(R.layout.callout, null);
-
-                TextView txtBubbleTitle = (TextView)calloutLayout.findViewById(R.id.edtBubbleTitle);
-                TextView txtBubbleText = (TextView)calloutLayout.findViewById(R.id.edtBubbleText);
-                txtBubbleTitle.setText(mStrCountry);
-                txtBubbleText.setText(mStrCapital);
-
-                CallOut callout = new CallOut(GeometryInfoActivity.this);
-                callout.setContentView(calloutLayout);				// 设置显示内容
-                callout.setStyle(CalloutAlignment.BOTTOM);			// 设置对齐方式
-                callout.setLocation(ptInner.getX(), ptInner.getY());// 设置显示位置
-
-                //callout.setBackground(android.graphics.Color.argb(255, 120, 230, 255),
-                //			android.graphics.Color.argb(255, 200, 246, 255));// 自定义颜色
-                m_mapView.removeAllCallOut();
-                m_mapView.addCallout(callout);
-                m_mapView.showCallOut();							// 显示标注
+            if (!bLongPressEnable) {
+                return;
             }
-            super.onLongPress(e);
+            int x = (int) e.getX();
+            int y = (int) e.getY();
+            Point2D pt = mMapControl.getMap().pixelToMap(new Point(x, y));
+            CallOut callout = new CallOut(GeometryInfoActivity.this);
+            callout.setStyle(CalloutAlignment.LEFT_BOTTOM);
+            callout.setCustomize(true);
+            callout.setLocation(pt.getX(), pt.getY());
+            //当投影不是经纬坐标系时，则对起始点进行投影转换
+//            if (mMapControl.getMap().getPrjCoordSys().getType() != PrjCoordSysType.PCS_EARTH_LONGITUDE_LATITUDE) {
+//                Point2Ds points = new Point2Ds();
+//                points.add(pt);
+//                PrjCoordSys desPrjCoorSys = new PrjCoordSys();
+//                desPrjCoorSys.setType(PrjCoordSysType.PCS_EARTH_LONGITUDE_LATITUDE);
+//                CoordSysTranslator.convert(points, mMapControl.getMap().getPrjCoordSys(), desPrjCoorSys, new CoordSysTransParameter(), CoordSysTransMethod.MTH_GEOCENTRIC_TRANSLATION);
+//                pt = points.getItem(0);
+//            }
+            MLog.e("====zhq====>00<"+x+"===="+y);
+            MLog.e("====zhq====>11<"+pt.getX()+"===="+pt.getY());
+            ImageView image = new ImageView(GeometryInfoActivity.this);
+            //添加第一个点
+            if (!bEndPointEnable) {
+                image.setBackgroundResource(R.drawable.startpoint);
+                callout.setContentView(image);
+                mMapView.addCallout(callout);
+                mNavi.setStartPoint(pt.getX(), pt.getY());
+                bEndPointEnable = true;
+                bLongPressEnable = false;
+                btnSetting.setText("设置终点");
+                btnSetting.invalidate();
+                return;
+            }
+            image.setBackgroundResource(R.drawable.despoint);
+            callout.setContentView(image);
+            mMapView.addCallout(callout);
+            mNavi.setDestinationPoint(pt.getX(), pt.getY());
+            bAnalystEnable = true;
+            btnSetting.setText("重置起点");
+            bResetPoint = true;
+            bEndPointEnable = false;
+            bLongPressEnable = false;
         }
     }
 }

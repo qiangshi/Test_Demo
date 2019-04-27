@@ -9,7 +9,7 @@ public class Constant {
 
     /******** sd卡 目录管理*************/
     public static final String SD_SAVE_DIR = "sdfiles";//需要复制到sd的assets数据
-    public static final String SD_PROJ_DIR = "/SHPDOneMap";//项目数据路径
+    public static final String SD_PROJ_DIR = "/MapDemo";//项目数据路径
 
     public static final String SD_SM_LICENSE_DIR = SD_PROJ_DIR + "/SMData/license";//超图许可证书路径
     public static final String SD_SM_TEMP_DIR = SD_PROJ_DIR + "/SMData/temp";//超图临时路径
@@ -17,6 +17,7 @@ public class Constant {
     public static final String SD_SM_FONTS_DIR = SD_PROJ_DIR + "/SMData/fonts";//超图字体文件路径
     public static final String SD_SM_DB_WS = SD_PROJ_DIR + "/SMData/GeometryInfo/SHPD-Business.smwu";//超图数据工作空间
     public static final String SD_SM_DB_NINGBOGANG = SD_PROJ_DIR + "/SMData/GeometryInfo/ningbogang.smwu";//超图数据工作空间
+    public static final String SD_SM_DB_GUIDE = SD_PROJ_DIR + "/SMData/GeometryInfo/naviData";//导航数据
     public static final String SD_SM_DB_BASE_MAP = SD_PROJ_DIR + "/SMData/GeometryInfo/baseMap/baseMap.sci";//基础底图sci路径
 
     public static final String SM_BUSINESS_MAP_NAME = "businessMap"; //超图数据工作空间中的业务地图名称

@@ -106,7 +106,7 @@ dependencies {
     androidTestImplementation rootProject.ext.dependencies.espresso
     implementation rootProject.ext.dependencies["support"]
     api rootProject.ext.dependencies["fastjson"]
-    /** **  网络框架 start           ****/
+    /** **  网络框架 start            ****/
     implementation rootProject.ext.dependencies["retrofit"]
     implementation rootProject.ext.dependencies["adapter-rxjava"]
     implementation rootProject.ext.dependencies["rxandroid"]
@@ -142,4 +142,5 @@ dependencies {
     implementation files('libs/com.supermap.realspace_v911.jar')
     implementation files('libs/BaiduLBS_Android.jar')
     implementation files('libs/com.supermap.services_v911.jar')
+    implementation files('libs/com.supermap.navigation_v911.jar')
 }
